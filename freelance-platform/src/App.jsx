@@ -1,18 +1,22 @@
-// App.jsx
-
+// App.js
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
+import JobPage from './pages/JobsPage';
 import LoginPage from './pages/LoginPage';
-import JobsPage from './pages/JobsPage';
-// ... Import other necessary components or pages
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <JobsPage />
-      {/* You can also set up routing here if you have multiple pages */}
-    </div>
+    <>
+      
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/jobs" element={<JobPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
