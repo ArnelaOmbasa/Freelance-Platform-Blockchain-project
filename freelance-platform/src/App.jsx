@@ -9,26 +9,22 @@ import AddJobModal from './components/AddJobModal';
 import { Button } from '@material-ui/core';
 import { useState } from 'react';
 import ViewJobDetailsModal from './components/JobDetailsModal';
+import SubmitProposalModal from './components/SubmitProposalModal';
+
 
 const App = () => {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [jobDetails, setJobDetails] = useState({
-    title: "Frontend Developer",
-    description: "We are looking for a React developer...",
-    payment: 5000,
-    isOpen: true,
-    freelancer: "0x123..."
-    // Add other fields as per your Job struct
-  });
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
 
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
   return (
     <>
       
-      <Button onClick={handleOpenModal}>View Job Details</Button>
-      <ViewJobDetailsModal job={jobDetails} open={isModalOpen} onClose={handleCloseModal} />
+      <Button variant="outlined" color="primary" onClick={handleOpen}>
+        Open Submit Proposal Modal
+      </Button>
+      <SubmitProposalModal open={modalOpen} onClose={handleClose} />
       {/*<Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/jobs" element={<JobPage />} />
