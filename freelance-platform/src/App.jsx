@@ -11,16 +11,22 @@ import LoginPage from './pages/LoginPage';
 const App = () => {
 
 
-
-
  
   return (
     <>
+
+   
+      <Routes>
+
      <Routes>
+
         <Route path="/" element={<LandingPage />} />
         <Route path="/jobs" element={<JobPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
+
+
+
   </>
   );
 };
