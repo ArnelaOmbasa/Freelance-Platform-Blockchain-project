@@ -3,8 +3,19 @@ import { Card, CardContent, Typography, Button, CardActions } from '@material-ui
 import ViewProposalModal from './ViewProposalModal'; // Import your modal components
 import ViewJobDetailsModal from './JobDetailsModal';
 import SubmitProposalModal from './SubmitProposalModal';
-
+import { makeStyles } from '@material-ui/core/styles';
+const useStyles = makeStyles((theme) => ({
+  card: {
+    height: '100%', 
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between', 
+  },
+}));
 function JobCard({ job, userStatus }) {
+
+  const classes = useStyles();
+
   const [isViewProposalOpen, setViewProposalOpen] = useState(false);
   const [isViewJobDetailsOpen, setViewJobDetailsOpen] = useState(false);
   const [isSubmitProposalOpen, setSubmitProposalOpen] = useState(false);
@@ -22,7 +33,7 @@ function JobCard({ job, userStatus }) {
 
   return (
     <>
-      <Card variant="outlined" style={{ flexBasis: 'calc(33.333% - 32px)', margin: '16px', maxWidth: '100%' }}>
+      <Card className={classes.card} variant="outlined">
         <CardContent>
           <Typography variant="h5">{job.title}</Typography>
           <Typography color="textSecondary">{job.description}</Typography>
@@ -33,7 +44,6 @@ function JobCard({ job, userStatus }) {
               <Button size="small" color="primary" onClick={handleOpenViewProposal}>
                 View Proposal
               </Button>
-              {/* Attach handleCloseViewProposal function to the Cancel button */}
               <Button size="small" color="primary" onClick={handleCloseViewProposal}>
                 Cancel
               </Button>
