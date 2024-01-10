@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import Navbar from '../components/Navbar';
 import backgroundImage from '../assets/background.png';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,6 +100,31 @@ const mockJobs = [
 
 const JobPage = () => {
   const classes = useStyles();
+  const [isAddJobOpen, setAddJobOpen] = useState(false);
+  const jobs = []; // Replace with your jobs data source
+
+  const handleOpenAddJob = () => setAddJobOpen(true);
+  const handleCloseAddJob = () => setAddJobOpen(false);
+
+  const onViewJob = (jobId) => {
+    // Logic for viewing a job
+    console.log('Viewing job:', jobId);
+  };
+
+  const onApply = (jobId) => {
+    // Logic for applying to a job
+    console.log('Applying to job:', jobId);
+  };
+
+  const onViewProposal = (jobId) => {
+    // Logic for viewing a proposal
+    console.log('Viewing proposal for job:', jobId);
+  };
+
+  const onCancelJob = (jobId) => {
+    // Logic for canceling a job
+    console.log('Canceling job:', jobId);
+  };
 
   return (
     <>
@@ -117,10 +143,10 @@ const JobPage = () => {
                   </Typography>
                 </CardContent>
                 <CardActions className={classes.cardActions}>
-                  <Button size="small" color="primary">
+                  <Button size="small" color="primary" onClick={() => onViewJob(job.id)}>
                     View Job
                   </Button>
-                  <Button size="small" color="primary">
+                  <Button size="small" color="primary" onClick={() => onApply(job.id)}>
                     Apply Now
                   </Button>
                 </CardActions>
@@ -130,7 +156,5 @@ const JobPage = () => {
         </Grid>
       </div>
     </>
-  );
-};
-
+  );}
 export default JobPage;

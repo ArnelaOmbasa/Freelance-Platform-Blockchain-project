@@ -16,22 +16,17 @@ import ViewProposalModal from './components/ViewProposalModal'; // Import your V
 
 const App = () => {
 
-  const [modalOpen, setModalOpen] = useState(false);  
-  // Hardcoded proposal text
-  const proposalText = "Here's a detailed proposal highlighting my experience, skills, and the value I can add to your project.";
+ 
 
  
   return (
     <>
-      <>
-      <button onClick={() => setModalOpen(true)}>View Proposal</button>
-      <ViewProposalModal open={modalOpen} handleClose={() => setModalOpen(false)} />
-    </>
-      {/*<Routes>
+   
+      <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/jobs" element={<JobPage />} />
         <Route path="/login" element={<LoginPage />} />
-      </Routes>*/}
+      </Routes>
 
   </>
   );

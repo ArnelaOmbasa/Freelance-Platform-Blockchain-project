@@ -1,4 +1,3 @@
-// JobCard.js
 import React from 'react';
 import { Card, CardContent, Typography, Button, CardActions } from '@material-ui/core';
 
