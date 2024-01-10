@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
 
 function JobDetailsModal({ job, open, onClose }) {
   const classes = useStyles();
+  if (!job) {
+    return null; // or any other placeholder you prefer
+  }
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="job-details-title">

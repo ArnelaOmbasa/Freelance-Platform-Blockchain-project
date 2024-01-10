@@ -26,11 +26,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewProposalModal = ({ open, handleClose }) => {
   const classes = useStyles();
+  const onClose = () => {
+    console.log("Closing modal...");
+    handleClose();
+  };
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
+    <Modal open={open} onClose={onClose}
       aria-labelledby="view-proposal-modal-title"
       aria-describedby="view-proposal-modal-description"
     >
@@ -42,10 +44,11 @@ const ViewProposalModal = ({ open, handleClose }) => {
           Here's a detailed proposal highlighting my experience, skills, and the value I can add to your project.
         </Typography>
         <div className={classes.buttonContainer}>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </div>
+        <Button onClick={onClose} color="primary">
+          Close
+        </Button>
+      </div>
+        
       </Box>
     </Modal>
   );
