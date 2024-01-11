@@ -18,7 +18,23 @@ import backgroundImage from '../assets/background.png';
 
 
 
+
+
+
+
+
+
+
+
 const adminAddress = '0x242F358146E1C6EB2df23C70E6917Fc6403E4229'; // Admin address
+
+
+
+
+
+
+
+
 
 
 
@@ -56,12 +72,28 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Remove the userStatus prop if you are hardcoding it for testing
 const JobPage = () => {
   const classes = useStyles();
   const [isAddJobOpen, setAddJobOpen] = useState(false);
   const [jobs, setJobs] = useState([]); // State to store jobs
   const [currentUserAddress, setCurrentUserAddress] = useState('');
+
+
+
+
 
 
 
@@ -80,18 +112,23 @@ const JobPage = () => {
   }, []);
 
 
-
-
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const jobsData = await getAllJobsMethod();
-        // Convert BigInt to string for each job's payment
-        const jobsWithPaymentAsString = jobsData.map(job => ({
-          ...job,
-          payment: job.payment.toString() // Convert BigInt to string
-        }));
-        setJobs(jobsWithPaymentAsString);
+        const response = await getAllJobsMethod();
+        const jobIds = response[0];
+        const jobData = response[1];
+ 
+        if (Array.isArray(jobIds) && Array.isArray(jobData)) {
+          const jobsWithIds = jobData.map((job, index) => ({
+            ...job,
+            id: jobIds[index].toString(), // Convert BigInt to string if necessary
+            payment: job.payment.toString() // Assuming job.payment is a BigInt
+          }));
+          setJobs(jobsWithIds);
+        } else {
+          console.error('Invalid response format:', response);
+        }
       } catch (error) {
         console.error('Error fetching jobs:', error);
       }
@@ -99,6 +136,16 @@ const JobPage = () => {
     fetchJobs();
   }, []);
  
+ 
+ 
+
+
+
+
+
+
+
+
 
 
 
@@ -113,7 +160,15 @@ const JobPage = () => {
 
 
 
+
+
+
+
   const isAdmin = currentUserAddress === adminAddress.toLowerCase();
+
+
+
+
 
 
 
@@ -147,7 +202,23 @@ const JobPage = () => {
 
 
 
+
+
+
+
 export default JobPage;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
