@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import background from '../assets/background.png'; // Ensure this path is correct
 import Web3 from 'web3';
 import {  useAuth } from '../AuthContext.jsx'; // Go up two levels
+import initializeWeb3 from '../web3/initializeWeb3'; // Use a default import
 
 
 const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"jobId","type":"uint256"}],"name":"JobCancelled","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"jobId","type":"uint256"},{"indexed":false,"internalType":"address","name":"freelancer","type":"address"}],"name":"JobCompleted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"jobId","type":"uint256"},{"indexed":false,"internalType":"string","name":"title","type":"string"},{"indexed":false,"internalType":"string","name":"description","type":"string"},{"indexed":false,"internalType":"uint256","name":"payment","type":"uint256"}],"name":"JobPosted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"jobId","type":"uint256"},{"indexed":false,"internalType":"address","name":"freelancer","type":"address"},{"indexed":false,"internalType":"string","name":"proposal","type":"string"}],"name":"ProposalSubmitted","type":"event"},{"inputs":[],"name":"admin","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"jobId","type":"uint256"}],"name":"cancelJob","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"jobId","type":"uint256"}],"name":"completeJob","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getAllJobs","outputs":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"uint256","name":"payment","type":"uint256"},{"internalType":"bool","name":"isOpen","type":"bool"},{"internalType":"address payable","name":"freelancer","type":"address"},{"internalType":"string","name":"proposal","type":"string"}],"internalType":"struct FreelancePlatform.Job[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"jobId","type":"uint256"}],"name":"getJobDetails","outputs":[{"components":[{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"uint256","name":"payment","type":"uint256"},{"internalType":"bool","name":"isOpen","type":"bool"},{"internalType":"address payable","name":"freelancer","type":"address"},{"internalType":"string","name":"proposal","type":"string"}],"internalType":"struct FreelancePlatform.Job","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"jobId","type":"uint256"}],"name":"getSubmittedProposal","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"jobCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"jobs","outputs":[{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"uint256","name":"payment","type":"uint256"},{"internalType":"bool","name":"isOpen","type":"bool"},{"internalType":"address payable","name":"freelancer","type":"address"},{"internalType":"string","name":"proposal","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"title","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"uint256","name":"paymentInEth","type":"uint256"}],"name":"postJob","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"jobId","type":"uint256"},{"internalType":"string","name":"proposal","type":"string"}],"name":"submitProposal","outputs":[],"stateMutability":"nonpayable","type":"function"}];
@@ -64,15 +65,14 @@ const LoginPage = () => {
   const [accounts, setAccounts] = useState([]);
   const { login } = useAuth();
 
-
   useEffect(() => {
-    if (window.ethereum) {
-      const web3Instance = new Web3(window.ethereum);
+    const web3Instance = initializeWeb3();
+    if (web3Instance) {
       setWeb3(web3Instance);
       const contractInstance = new web3Instance.eth.Contract(contractABI, contractAddress);
       setContract(contractInstance);
     } else {
-      console.log("MetaMask not found. Please install it.");
+      console.error("Web3 is not initialized. Please install MetaMask.");
     }
   }, []);
 
@@ -83,7 +83,8 @@ const LoginPage = () => {
         if (accounts.length > 0) {
           setAccounts(accounts);
           console.log('Connected with account:', accounts[0]);
-          login();         }
+          login(); // Call the login function from your authentication context
+        }
       }
     } catch (error) {
       console.error(error);
