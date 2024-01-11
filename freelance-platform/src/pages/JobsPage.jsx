@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import initializeWeb3 from '../web3/initializeWeb3';
+import { getAllJobsMethod } from '../web3/contractInteraction'; // Replace with your actual import path
 import {
   makeStyles,
   Grid,
@@ -8,6 +10,14 @@ import Navbar from '../components/Navbar';
 import JobCard from '../components/JobCard';
 import AddJobModal from '../components/AddJobModal';
 import backgroundImage from '../assets/background.png';
+
+
+
+
+const adminAddress = '0x242F358146E1C6EB2df23C70E6917Fc6403E4229'; // Admin address
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,87 +34,75 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.8rem', // Larger font size
     minWidth: '125px', // Minimum width
     backgroundColor: '#009ACD', // A bright blue color
-  
+ 
 }}));
 
-const mockJobs = [
-  {
-    id: 'job1',
-    title: 'Frontend Developer',
-    description: 'Seeking an experienced Frontend Developer with expertise in React and Redux. Familiarity with modern frontend build pipelines and tools required.',
-    payment: '500 ETH'
-  },
-  {
-    id: 'job2',
-    title: 'Backend Developer',
-    description: 'Looking for a skilled Backend Developer with proficiency in Node.js and Express. Knowledge of MongoDB and RESTful API development is a must.',
-    payment: '750 ETH'
-  },
-  {
-    id: 'job3',
-    title: 'Full Stack Developer',
-    description: 'Full Stack Developer needed to build a responsive web application. Experience with both frontend (React) and backend (Node.js, Express) technologies required.',
-    payment: '1200 ETH'
-  },
-  {
-    id: 'job4',
-    title: 'UX/UI Designer',
-    description: 'UX/UI Designer needed to redesign our mobile application. Strong portfolio showcasing design thinking and problem-solving skills required.',
-    payment: '400 ETH'
-  },
-  {
-    id: 'job5',
-    title: 'Project Manager',
-    description: 'Experienced Project Manager needed for managing a cross-functional team in a fast-paced environment. Agile and Scrum experience preferred.',
-    payment: '1000 ETH'
-  },
-  {
-    id: 'job6',
-    title: 'DevOps Engineer',
-    description: 'Seeking a DevOps Engineer with experience in AWS, Docker, and Kubernetes. Familiarity with CI/CD pipelines and automation tools is essential.',
-    payment: '900 ETH'
-  },
-  {
-    id: 'job7',
-    title: 'Project Manager',
-    description: 'Experienced project manager to lead software development projects.'
-  },
-  {
-    id: 'job8',
-    title: 'DevOps Engineer',
-    description: 'DevOps engineer with experience in AWS and Kubernetes.'
-  },
-  
-];
+
+
+
+
 
 // Remove the userStatus prop if you are hardcoding it for testing
 const JobPage = () => {
   const classes = useStyles();
   const [isAddJobOpen, setAddJobOpen] = useState(false);
+  const [jobs, setJobs] = useState([]); // State to store jobs
+  const [currentUserAddress, setCurrentUserAddress] = useState('');
 
-  // Hardcode userStatus for testing
-  const userStatus = 'admin'; // Change this as needed for testing
+
+  useEffect(() => {
+    const initialize = async () => {
+      const web3 = initializeWeb3();
+      if (web3) {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+          setCurrentUserAddress(accounts[0].toLowerCase());
+        }
+      }
+    };
+    initialize();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const jobsData = await getAllJobsMethod();
+        setJobs(jobsData);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+
+
 
   const handleOpenAddJob = () => setAddJobOpen(true);
   const handleCloseAddJob = () => setAddJobOpen(false);
+
+
+  const isAdmin = currentUserAddress === adminAddress.toLowerCase();
+
 
   return (
     <>
       <Navbar />
       <div className={classes.root}>
-        {userStatus === 'admin' && (
-          <Button 
-            className={classes.addButton} 
+        {isAdmin && (
+          <Button
+            className={classes.addButton}
             variant="contained"
-            color="primary" 
+            color="primary"
             onClick={handleOpenAddJob}>
               Add Job
           </Button>
         )}
         <Grid container spacing={3} justifyContent="center">
-          {mockJobs.map((job) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={job.id}>
-              <JobCard job={job} userStatus={userStatus} />
+          {jobs.map((job, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+              <JobCard job={job} userStatus={isAdmin ? 'admin' : 'user'} />
             </Grid>
           ))}
         </Grid>
@@ -114,4 +112,8 @@ const JobPage = () => {
   );
 };
 
+
 export default JobPage;
+
+
+
