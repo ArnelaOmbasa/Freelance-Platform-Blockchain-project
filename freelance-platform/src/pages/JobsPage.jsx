@@ -20,8 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     margin: theme.spacing(2),
-  },
-}));
+    padding: theme.spacing(1), // Increase padding
+    fontSize: '0.8rem', // Larger font size
+    minWidth: '125px', // Minimum width
+    backgroundColor: '#009ACD', // A bright blue color
+  
+}}));
 
 const mockJobs = [
   {
@@ -91,6 +95,7 @@ const JobPage = () => {
         {userStatus === 'admin' && (
           <Button 
             className={classes.addButton} 
+            variant="contained"
             color="primary" 
             onClick={handleOpenAddJob}>
               Add Job
