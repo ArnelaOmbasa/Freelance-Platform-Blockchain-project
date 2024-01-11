@@ -9,6 +9,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     padding: theme.spacing(2),
@@ -29,11 +30,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function JobDetailsModal({ job, open, onClose }) {
   const classes = useStyles();
+  console.log('Payment:', job.payment);
+
+
   if (!job) {
     return null; // or any other placeholder you prefer
   }
+  const paymentString = job.payment || '0';
+
+
+
 
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="job-details-title">
@@ -45,7 +54,7 @@ function JobDetailsModal({ job, open, onClose }) {
           Description: {job.description}
         </DialogContentText>
         <DialogContentText className={classes.contentText}>
-          Payment: {job.payment} ETH
+          Payment: {paymentString} ETH
         </DialogContentText>
       </DialogContent>
       <DialogActions className={classes.closeButton}>
@@ -57,4 +66,8 @@ function JobDetailsModal({ job, open, onClose }) {
   );
 }
 
+
 export default JobDetailsModal;
+
+
+

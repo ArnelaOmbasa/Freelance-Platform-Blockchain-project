@@ -14,7 +14,15 @@ import backgroundImage from '../assets/background.png';
 
 
 
+
+
+
+
 const adminAddress = '0x242F358146E1C6EB2df23C70E6917Fc6403E4229'; // Admin address
+
+
+
+
 
 
 
@@ -42,12 +50,20 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+
+
+
+
+
+
 // Remove the userStatus prop if you are hardcoding it for testing
 const JobPage = () => {
   const classes = useStyles();
   const [isAddJobOpen, setAddJobOpen] = useState(false);
   const [jobs, setJobs] = useState([]); // State to store jobs
   const [currentUserAddress, setCurrentUserAddress] = useState('');
+
+
 
 
   useEffect(() => {
@@ -64,17 +80,29 @@ const JobPage = () => {
   }, []);
 
 
+
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const jobsData = await getAllJobsMethod();
-        setJobs(jobsData);
+        // Convert BigInt to string for each job's payment
+        const jobsWithPaymentAsString = jobsData.map(job => ({
+          ...job,
+          payment: job.payment.toString() // Convert BigInt to string
+        }));
+        setJobs(jobsWithPaymentAsString);
       } catch (error) {
         console.error('Error fetching jobs:', error);
       }
     };
     fetchJobs();
   }, []);
+ 
+
+
+
+
 
 
 
@@ -83,7 +111,11 @@ const JobPage = () => {
   const handleCloseAddJob = () => setAddJobOpen(false);
 
 
+
+
   const isAdmin = currentUserAddress === adminAddress.toLowerCase();
+
+
 
 
   return (
@@ -113,7 +145,15 @@ const JobPage = () => {
 };
 
 
+
+
 export default JobPage;
+
+
+
+
+
+
 
 
 
