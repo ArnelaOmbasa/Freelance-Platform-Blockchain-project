@@ -6,6 +6,7 @@ import SubmitProposalModal from './SubmitProposalModal';
 import { makeStyles } from '@material-ui/core/styles';
 import { cancelJobMethod } from '../web3/contractInteraction';
 
+
 const useStyles = makeStyles((theme) => ({
   card: {
     height: '100%',
@@ -22,7 +23,17 @@ function JobCard({ job, userStatus }) {
 
 
 
+
+
+
+
+
+
   const classes = useStyles();
+
+
+
+
 
 
 
@@ -34,14 +45,26 @@ function JobCard({ job, userStatus }) {
 
 
 
+
+
+
+
   const handleOpenViewProposal = () => setViewProposalOpen(true);
   const handleCloseViewProposal = () => setViewProposalOpen(false);
 
 
 
 
+
+
+
+
   const handleOpenViewJobDetails = () => setViewJobDetailsOpen(true);
   const handleCloseViewJobDetails = () => setViewJobDetailsOpen(false);
+
+
+
+
 
 
 
@@ -54,7 +77,15 @@ function JobCard({ job, userStatus }) {
 
 
 
+
+
+
+
+
+
   const handleCancelJob = async () => {
+
+
 
 
     if (!job.id) {
@@ -71,6 +102,10 @@ function JobCard({ job, userStatus }) {
     }
   };
  
+
+
+
+
 
 
 
@@ -106,7 +141,7 @@ function JobCard({ job, userStatus }) {
       </Card>
       <ViewProposalModal open={isViewProposalOpen} handleClose={handleCloseViewProposal} />
       <ViewJobDetailsModal job={job} open={isViewJobDetailsOpen} onClose={handleCloseViewJobDetails} />
-      <SubmitProposalModal open={isSubmitProposalOpen} onClose={handleCloseSubmitProposal} />
+      <SubmitProposalModal open={isSubmitProposalOpen} onClose={handleCloseSubmitProposal} jobId={job.id}/>
     </>
   );
 }
@@ -114,17 +149,10 @@ function JobCard({ job, userStatus }) {
 
 
 
+
+
+
+
 export default JobCard;
-
-
-
-
-
-
-
-
-
-
-
 
 
