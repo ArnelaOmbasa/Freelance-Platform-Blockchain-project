@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext.jsx'; // Go up two levels
+import { useAuth } from '../AuthContext.jsx';
 
 
 
@@ -35,12 +35,11 @@ function Navbar() {
   const { isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
-    console.log("Setting up event listener for accountsChanged"); // Add this line
+    console.log("Setting up event listener for accountsChanged");
     const handleAccountsChanged = (accounts) => {
-      // MetaMask has disconnected or switched accounts if accounts array is empty
       if (accounts.length === 0) {
         console.log("MetaMask account disconnected.");
-        logout(); // Logout if MetaMask is disconnected
+        logout();
         navigate('/');
       }
     };
@@ -49,7 +48,6 @@ function Navbar() {
       window.ethereum.on('accountsChanged', handleAccountsChanged);
     }
   
-    // Cleanup the event listener when the component unmounts
     return () => {
       if (window.ethereum) {
         window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
@@ -61,7 +59,7 @@ function Navbar() {
 
   const handleLogoutClick = () => {
     logout();
-    navigate('/'); // Redirect to the landing page after logging out
+    navigate('/');
   };
   return (
     <AppBar position="static" className={classes.navbar}>

@@ -5,11 +5,6 @@ import { useState, useEffect } from 'react';
 
 
 
-
-
-
-
-
 const useStyles = makeStyles((theme) => ({
   modalBox: {
     position: 'absolute',
@@ -25,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   proposalText: {
-    marginBottom: theme.spacing(2), // Spacing between the text and the button
+    marginBottom: theme.spacing(2),
   },
   buttonContainer: {
     display: 'flex',
@@ -64,7 +59,6 @@ const ViewProposalModal = ({ open, handleClose, jobId }) => {
       fetchProposalDetails();
     }
  
-    // Reset proposal details when modal closes
     return () => {
       if (!open) {
         setProposalDetails('');
@@ -75,7 +69,7 @@ const ViewProposalModal = ({ open, handleClose, jobId }) => {
  
   const onClose = () => {
     console.log("Closing modal...");
-    setProposalDetails(''); // Reset proposal details on close
+    setProposalDetails(''); 
     setLoading(false);
     handleClose();
   };

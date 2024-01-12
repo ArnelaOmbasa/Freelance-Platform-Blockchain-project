@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import initializeWeb3 from '../web3/initializeWeb3';
-import { getAllJobsMethod } from '../web3/contractInteraction'; // Replace with your actual import path
+import { getAllJobsMethod } from '../web3/contractInteraction';
 import {
   makeStyles,
   Grid,
@@ -13,130 +13,7 @@ import backgroundImage from '../assets/background.png';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const adminAddress = '0x242F358146E1C6EB2df23C70E6917Fc6403E4229'; // Admin address
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const adminAddress = '0x242F358146E1C6EB2df23C70E6917Fc6403E4229';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -150,147 +27,22 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     margin: theme.spacing(2),
-    padding: theme.spacing(1), // Increase padding
-    fontSize: '0.8rem', // Larger font size
-    minWidth: '125px', // Minimum width
-    backgroundColor: '#009ACD', // A bright blue color
+    padding: theme.spacing(1),
+    fontSize: '0.8rem', 
+    minWidth: '125px',
+    backgroundColor: '#009ACD', 
  
 }}));
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Remove the userStatus prop if you are hardcoding it for testing
 const JobPage = () => {
   const classes = useStyles();
   const [isAddJobOpen, setAddJobOpen] = useState(false);
-  const [jobs, setJobs] = useState([]); // State to store jobs
+  const [jobs, setJobs] = useState([]);
   const [currentUserAddress, setCurrentUserAddress] = useState('');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  useEffect(() => {
+useEffect(() => {
     const initialize = async () => {
       const web3 = initializeWeb3();
       if (web3) {
@@ -302,11 +54,6 @@ const JobPage = () => {
     };
     initialize();
   }, []);
-
-
-
-
-
 
 
 
@@ -323,7 +70,7 @@ const JobPage = () => {
             ...job,
             id: jobIds[index].toString(),
             isProposalSubmitted: job.freelancer !== "0x0000000000000000000000000000000000000000",
-            payment: job.payment.toString() // Convert BigInt to string if necessary
+            payment: job.payment.toString()
           }));
           setJobs(jobsWithIds);
         } else {
@@ -339,137 +86,9 @@ const JobPage = () => {
   }, []);
  
  
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const handleOpenAddJob = () => setAddJobOpen(true);
   const handleCloseAddJob = () => setAddJobOpen(false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const isAdmin = currentUserAddress === adminAddress.toLowerCase();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <>
@@ -496,35 +115,6 @@ const JobPage = () => {
     </>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
