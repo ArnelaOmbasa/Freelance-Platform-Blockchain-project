@@ -1,13 +1,10 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, Typography, Button, CardActions } from '@material-ui/core';
-import ViewProposalModal from './ViewProposalModal'; // Import your modal components
+import ViewProposalModal from './ViewProposalModal';
 import ViewJobDetailsModal from './JobDetailsModal';
 import SubmitProposalModal from './SubmitProposalModal';
 import { makeStyles } from '@material-ui/core/styles';
-import { cancelJobMethod } from '../web3/contractInteraction';
-
-
-
+import { cancelJobMethod, completeJobMethod } from '../web3/contractInteraction';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -17,130 +14,38 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
 }));
+
 function JobCard({ job, userStatus }) {
-  console.log("JobCard job object:", job); // Add this line for debugging
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const classes = useStyles();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const [isViewProposalOpen, setViewProposalOpen] = useState(false);
   const [isViewJobDetailsOpen, setViewJobDetailsOpen] = useState(false);
   const [isSubmitProposalOpen, setSubmitProposalOpen] = useState(false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const [proposalSubmitted, setProposalSubmitted] = useState(false);
 
   const handleOpenViewProposal = () => setViewProposalOpen(true);
   const handleCloseViewProposal = () => setViewProposalOpen(false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const handleOpenViewJobDetails = () => setViewJobDetailsOpen(true);
   const handleCloseViewJobDetails = () => setViewJobDetailsOpen(false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const handleOpenSubmitProposal = () => setSubmitProposalOpen(true);
-  const handleCloseSubmitProposal = () => setSubmitProposalOpen(false);
+  const handleCloseSubmitProposal = () => {
+    setSubmitProposalOpen(false);
+    setProposalSubmitted(true); // Assuming proposal is submitted when modal is closed
+  };
 
+  const handleCompleteJob = async () => {
+    if (!job.id) {
+      console.error('Job ID is missing');
+      return;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    try {
+      await completeJobMethod(job.id); // Ensure job.id is the correct identifier
+      console.log('Job completed successfully');
+      // Additional logic after successful completion (e.g., refresh jobs list)
+    } catch (error) {
+      console.error('Error completing job:', error);
+    }
+  };
   const handleCancelJob = async () => {
 
 
@@ -164,27 +69,11 @@ function JobCard({ job, userStatus }) {
     }
   };
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <Card className={classes.card} variant="outlined">
         <CardContent>
-        <Typography variant="h5">{job.title || 'No Title'}</Typography>
+          <Typography variant="h5">{job.title || 'No Title'}</Typography>
           <Typography color="textSecondary">{job.description || 'No Description'}</Typography>
         </CardContent>
         <CardActions>
@@ -202,9 +91,15 @@ function JobCard({ job, userStatus }) {
               <Button size="small" color="primary" onClick={handleOpenViewJobDetails}>
                 View Job
               </Button>
-              <Button size="small" color="primary" onClick={handleOpenSubmitProposal}>
-                Apply Now
-              </Button>
+              {proposalSubmitted ? (
+                <Button size="small" color="secondary" onClick={handleCompleteJob}>
+                  Complete
+                </Button>
+              ) : (
+                <Button size="small" color="primary" onClick={handleOpenSubmitProposal}>
+                  Apply Now
+                </Button>
+              )}
             </>
           )}
         </CardActions>
@@ -216,26 +111,4 @@ function JobCard({ job, userStatus }) {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default JobCard;
-
-
-
-
-
-
-
