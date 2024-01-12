@@ -1,10 +1,10 @@
 import React from 'react';
 import { Modal, Box, Typography, Button, TextField } from '@material-ui/core';
-import { submitProposalMethod } from '../web3/contractInteraction'; // Adjust the import path as necessary
+import { submitProposalMethod } from '../web3/contractInteraction';
 import { useState } from 'react';
 
 
-// Custom styles for the modal
+
 const modalStyle = {
   position: 'absolute',
   top: '50%',
@@ -14,15 +14,14 @@ const modalStyle = {
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
-  borderRadius: 2, // Rounded corners
-  outline: 'none' // Remove default focus outline
+  borderRadius: 2,
+  outline: 'none' 
 };
 
 
-// Custom styles for the buttons
 const buttonStyle = {
-  mt: 2, // Margin top
-  mr: 1, // Margin right
+  mt: 2, 
+  mr: 1,
 };
 
 
@@ -47,7 +46,7 @@ function SubmitProposalModal({ open, onClose,jobId }) {
     try {
       await submitProposalMethod(jobId, proposalText);
       console.log('Proposal submitted successfully');
-      onClose(); // Close the modal after submit
+      onClose();
     } catch (error) {
       console.error('Error submitting proposal:', error);
     }
@@ -77,7 +76,7 @@ function SubmitProposalModal({ open, onClose,jobId }) {
           rows={4}
           value={proposalText}
           onChange={(event) => setProposalText(event.target.value)}
-          sx={{ mt: 2 }} // Margin top
+          sx={{ mt: 2 }} 
         />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
   <Button onClick={onClose} sx={buttonStyle}>

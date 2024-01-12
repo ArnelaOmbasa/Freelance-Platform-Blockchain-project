@@ -19,11 +19,11 @@ function JobList({ jobs, onViewJob, onApply }) {
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
-      justifyContent: 'space-around', // Changed to space-around for full width distribution
+      justifyContent: 'space-around',
       alignContent: 'flex-start',
-      padding: '16px 0', // Removed horizontal padding
-      width: '100%', // Ensure full width
-      boxSizing: 'border-box', // Ensure padding doesn't affect the overall width
+      padding: '16px 0', 
+      width: '100%', 
+      boxSizing: 'border-box',
     }}>
       {jobs.map((job) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={job.id} className={classes.gridItem}>

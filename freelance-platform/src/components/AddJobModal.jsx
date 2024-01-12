@@ -7,7 +7,6 @@ import initializeWeb3 from '../web3/initializeWeb3';
 
 
 
-
 const AddJobModal = ({ open, onClose }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

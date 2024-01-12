@@ -5,7 +5,7 @@ import HowItWorksCard from '../components/HowItWorksCard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import background from '../assets/background.png'; // Ensure this path is correct
+import background from '../assets/background.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,27 +27,27 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
   },
   blueText: {
-    color: theme.palette.primary.main, // This will use the primary color from your theme, typically blue
+    color: theme.palette.primary.main,
   },
   titleBackground: {
     display: 'inline-block',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)', // semi-transparent white background
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
    
-    margin: '0 auto', // This centers the title background
+    margin: '0 auto',
   },
   subtitleBackground: {
     display: 'inline-block',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)', // semi-transparent white background
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
     padding: theme.spacing(2),
     borderRadius: theme.shape.borderRadius,
     maxWidth: '80%',
-    margin: '0 auto', // This centers the subtitle background
+    margin: '0 auto',
   },
   howItWorksTitle: {
     textAlign: 'center',
-    margin: theme.spacing(4, 0), // Adjust the top and bottom margin as needed
+    margin: theme.spacing(4, 0),
   },
   howItWorksSection: {
     backgroundColor: theme.palette.background.paper,

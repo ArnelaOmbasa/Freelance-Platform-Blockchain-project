@@ -11,4 +11,4 @@ const initializeWeb3 = () => {
   }
 };
 
-export default initializeWeb3; // Export the function
+export default initializeWeb3;

@@ -29,7 +29,7 @@ function JobCard({ job, userStatus }) {
   const handleOpenSubmitProposal = () => setSubmitProposalOpen(true);
   const handleCloseSubmitProposal = () => {
     setSubmitProposalOpen(false);
-    setProposalSubmitted(true); // Assuming proposal is submitted when modal is closed
+    setProposalSubmitted(true);
   };
 
   const handleCompleteJob = async () => {
@@ -39,20 +39,13 @@ function JobCard({ job, userStatus }) {
     }
 
     try {
-      await completeJobMethod(job.id); // Ensure job.id is the correct identifier
+      await completeJobMethod(job.id);
       console.log('Job completed successfully');
-      // Additional logic after successful completion (e.g., refresh jobs list)
     } catch (error) {
       console.error('Error completing job:', error);
     }
   };
   const handleCancelJob = async () => {
-
-
-
-
-
-
 
 
     if (!job.id) {
@@ -61,9 +54,8 @@ function JobCard({ job, userStatus }) {
     }
  
     try {
-      await cancelJobMethod(job.id); // Ensure job.id is the correct identifier
+      await cancelJobMethod(job.id);
       console.log('Job cancelled successfully');
-      // Additional logic after successful cancellation (e.g., refresh jobs list)
     } catch (error) {
       console.error('Error cancelling job:', error);
     }

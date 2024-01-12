@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 0),
   },
   contentText: {
-    color: '#000', // This sets the text color to black
+    color: '#000',
   },
   closeButton: {
     justifyContent: 'center',
@@ -37,7 +37,7 @@ function JobDetailsModal({ job, open, onClose }) {
 
 
   if (!job) {
-    return null; // or any other placeholder you prefer
+    return null;
   }
   const paymentString = job.payment || '0';
 
