@@ -6,6 +6,10 @@ import { useState, useEffect } from 'react';
 
 
 
+
+
+
+
 const useStyles = makeStyles((theme) => ({
   modalBox: {
     position: 'absolute',
@@ -30,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 const ViewProposalModal = ({ open, handleClose, jobId }) => {
   const classes = useStyles();
   const [proposalDetails, setProposalDetails] = useState('');
@@ -37,34 +43,44 @@ const ViewProposalModal = ({ open, handleClose, jobId }) => {
 
 
   useEffect(() => {
-    if (open && jobId) {
+    const fetchProposalDetails = async () => {
+      if (!jobId) {
+        console.error('Job ID is missing');
+        setProposalDetails('No job selected.');
+        return;
+      }
+      setLoading(true);
+      try {
+        const details = await getSubmittedProposalMethod(jobId);
+        setProposalDetails(details || 'No proposal has been submitted for this job yet.');
+      } catch (error) {
+        console.error("Error fetching proposal details:", error);
+        setProposalDetails('Failed to load proposal details.');
+      }
+      setLoading(false);
+    };
+ 
+    if (open) {
       fetchProposalDetails();
     }
-  }, [open, jobId]);
-
-
-  const fetchProposalDetails = async () => {
-    setLoading(true);
-    try {
-      const details = await getSubmittedProposalMethod(jobId);
-      if (details) {
-        setProposalDetails(details);
-      } else {
-        setProposalDetails('No proposal has been submitted for this job yet.');
+ 
+    // Reset proposal details when modal closes
+    return () => {
+      if (!open) {
+        setProposalDetails('');
       }
-    } catch (error) {
-      console.error("Error fetching proposal details:", error);
-      setProposalDetails('Failed to load proposal details.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+  }, [open, jobId]);
+ 
+ 
   const onClose = () => {
     console.log("Closing modal...");
     setProposalDetails(''); // Reset proposal details on close
     setLoading(false);
     handleClose();
   };
+
+
 
 
   const renderContent = () => {
@@ -74,6 +90,8 @@ const ViewProposalModal = ({ open, handleClose, jobId }) => {
       return proposalDetails;
     }
   };
+
+
 
 
   return (
@@ -100,7 +118,15 @@ const ViewProposalModal = ({ open, handleClose, jobId }) => {
 };
 
 
+
+
 export default ViewProposalModal;
+
+
+
+
+
+
 
 
 
