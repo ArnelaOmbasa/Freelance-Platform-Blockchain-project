@@ -26,7 +26,39 @@ import backgroundImage from '../assets/background.png';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const adminAddress = '0x242F358146E1C6EB2df23C70E6917Fc6403E4229'; // Admin address
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,12 +116,44 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Remove the userStatus prop if you are hardcoding it for testing
 const JobPage = () => {
   const classes = useStyles();
   const [isAddJobOpen, setAddJobOpen] = useState(false);
   const [jobs, setJobs] = useState([]); // State to store jobs
   const [currentUserAddress, setCurrentUserAddress] = useState('');
+
+
+
+
+
+
+
+
 
 
 
@@ -112,6 +176,8 @@ const JobPage = () => {
   }, []);
 
 
+
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -122,10 +188,11 @@ const JobPage = () => {
         if (Array.isArray(jobIds) && Array.isArray(jobData)) {
           const jobsWithIds = jobData.map((job, index) => ({
             ...job,
-            id: jobIds[index].toString(), // Convert BigInt to string if necessary
-            payment: job.payment.toString() // Assuming job.payment is a BigInt
+            id: jobIds[index].toString(), // Convert BigInt to string
+            payment: job.payment.toString() // Convert BigInt to string if necessary
           }));
           setJobs(jobsWithIds);
+         
         } else {
           console.error('Invalid response format:', response);
         }
@@ -154,6 +221,22 @@ const JobPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleOpenAddJob = () => setAddJobOpen(true);
   const handleCloseAddJob = () => setAddJobOpen(false);
 
@@ -164,7 +247,23 @@ const JobPage = () => {
 
 
 
+
+
+
+
+
+
+
+
   const isAdmin = currentUserAddress === adminAddress.toLowerCase();
+
+
+
+
+
+
+
+
 
 
 
@@ -206,7 +305,39 @@ const JobPage = () => {
 
 
 
+
+
+
+
+
+
+
+
 export default JobPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
