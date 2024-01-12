@@ -42,7 +42,71 @@ import backgroundImage from '../assets/background.png';
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const adminAddress = '0x242F358146E1C6EB2df23C70E6917Fc6403E4229'; // Admin address
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -140,12 +204,76 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Remove the userStatus prop if you are hardcoding it for testing
 const JobPage = () => {
   const classes = useStyles();
   const [isAddJobOpen, setAddJobOpen] = useState(false);
   const [jobs, setJobs] = useState([]); // State to store jobs
   const [currentUserAddress, setCurrentUserAddress] = useState('');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -178,21 +306,26 @@ const JobPage = () => {
 
 
 
+
+
+
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await getAllJobsMethod();
         const jobIds = response[0];
         const jobData = response[1];
- 
+
+
         if (Array.isArray(jobIds) && Array.isArray(jobData)) {
           const jobsWithIds = jobData.map((job, index) => ({
             ...job,
-            id: jobIds[index].toString(), // Convert BigInt to string
+            id: jobIds[index].toString(),
+            isProposalSubmitted: job.freelancer !== "0x0000000000000000000000000000000000000000",
             payment: job.payment.toString() // Convert BigInt to string if necessary
           }));
           setJobs(jobsWithIds);
-         
         } else {
           console.error('Invalid response format:', response);
         }
@@ -200,11 +333,45 @@ const JobPage = () => {
         console.error('Error fetching jobs:', error);
       }
     };
+
+
     fetchJobs();
   }, []);
  
  
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -255,7 +422,39 @@ const JobPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const isAdmin = currentUserAddress === adminAddress.toLowerCase();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -313,7 +512,71 @@ const JobPage = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default JobPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
